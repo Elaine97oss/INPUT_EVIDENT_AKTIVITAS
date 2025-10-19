@@ -315,32 +315,50 @@ header h2 {
   header {
     background: #fff !important;
     color: #111827 !important;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 6px;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 4px 0 6px 0;
     box-shadow: none !important;
+    margin-bottom: 4px;
   }
 
-  header h1,
+  header h1 {
+    color: #111827 !important;
+    font-size: 18px;
+    margin-bottom: 2px;
+  }
+
   header h2 {
     color: #111827 !important;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
   }
 
-  header input {
+ 
+  .subtitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;        
+    gap: 6px;                 
+    margin-top: 2px;
+    font-size: 12px;
+  }
+
+  .subtitle label {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .subtitle input {
     border: 1px solid #ccc;
     background: #fff;
     color: #111827;
-  }
-
-  /* Periode turun ke bawah & tengah */
-  .subtitle {
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-  }
-
-  #periode {
-    order: 99;
-    margin-top: 4px;
+    font-size: 11px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    width: 100px;            
+    text-align: center;
   }
 
   body {
@@ -356,6 +374,14 @@ header h2 {
     box-shadow: none;
   }
 }
+
+/* ===== PRINT PAGE ===== */
+@page {
+  size: A4 portrait;
+  margin: 1cm;
+}
+
+
 
 /* ===== PRINT PAGE ===== */
 @page {
