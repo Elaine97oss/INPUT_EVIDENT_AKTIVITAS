@@ -218,3 +218,11 @@ document.getElementById("btnClear").onclick = () => {
 
 // Render awal
 render();
+
+// === Tambahan: Tombol kembali ke dashboard ===
+const backBtn = document.getElementById("btnDashboard");
+if (backBtn) {
+  backBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+}
