@@ -8,6 +8,18 @@
 </head>
 <body>
   <header>📸 DASHBOARD EVIDENT AKTIVITAS FOTO GEDUNG TELKOM 2025</header>
+
+  <!-- === TOMBOL BUKA README === -->
+  <div style="text-align:center; margin-top:20px;">
+    <button id="btnReadme" class="btn secondary">ℹ️ Tentang Aplikasi</button>
+  </div>
+
+  <!-- === README SECTION (tersembunyi awalnya) === -->
+  <div id="readme-container" class="readme-box" style="display:none;">
+    <p><em>Memuat informasi...</em></p>
+  </div>
+
+  <!-- === PILIH KELAS === -->
   <div class="selector">
     <label for="kelas">Pilih Kelas Aktivitas:</label>
     <select id="kelas">
@@ -19,15 +31,51 @@
       <option value="5">Kelas 5</option>
       <option value="6">Kelas 6</option>
     </select>
-    <button onclick="goToForm()">Buka Form</button>
+    <button id="btnBuka" class="btn">Buka Form</button>
   </div>
 
   <script>
-    function goToForm() {
-      const kelas = document.getElementById('kelas').value;
+    const readmeBox = document.getElementById('readme-container');
+    const btnReadme = document.getElementById('btnReadme');
+    const btnBuka = document.getElementById('btnBuka');
+    const kelasSelect = document.getElementById('kelas');
+
+    // === Tombol "Tentang Aplikasi" ===
+    btnReadme.addEventListener('click', async () => {
+      if (readmeBox.style.display === 'block') {
+        readmeBox.style.display = 'none';
+        btnReadme.textContent = 'ℹ️ Tentang Aplikasi';
+        return;
+      }
+      btnReadme.textContent = '⬆️ Sembunyikan Info';
+      readmeBox.style.display = 'block';
+
+      try {
+        const res = await fetch('README.md');
+        if (!res.ok) throw new Error('Gagal memuat README');
+        const text = await res.text();
+        const html = text
+          .replace(/^# (.*$)/gim, '<h2>$1</h2>')
+          .replace(/^## (.*$)/gim, '<h3>$1</h3>')
+          .replace(/^### (.*$)/gim, '<h4>$1</h4>')
+          .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+          .replace(/\*(.*)\*/gim, '<em>$1</em>')
+          .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+          .replace(/\n$/gim, '<br>')
+          .replace(/\n\n/gim, '</p><p>');
+
+        readmeBox.innerHTML = `<div class="readme">${html}</div>`;
+      } catch {
+        readmeBox.innerHTML = '<p style="color:#f87171;">⚠️ Tidak dapat memuat README.md</p>';
+      }
+    });
+
+    // === Tombol "Buka Form" ===
+    btnBuka.addEventListener('click', () => {
+      const kelas = kelasSelect.value;
       if (!kelas) return alert('Silakan pilih kelas terlebih dahulu.');
       window.location.href = `form.html?kelas=${kelas}`;
-    }
+    });
   </script>
 </body>
 </html>
