@@ -73,3 +73,4 @@ const KELAS_DATA = {
     { no: 4, pekerjaan: "Melakukan Pemeliharaan dan Perawatan Kebersihan Area Parkir & Jalan, Marka Jalan & Pendestrian", frekuensi: "1x Per Hari" }
   ]
 };
+window.KELAS_DATA = KELAS_DATA;
