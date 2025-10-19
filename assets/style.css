@@ -308,7 +308,8 @@ header h2 {
   .btn,
   .progress,
   .note,
-  .delete {
+  .delete,
+  #btnDashboard {
     display: none !important;
   }
 
