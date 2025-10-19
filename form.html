@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Evident Aktivitas</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="data/kelas_data.js"></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <div class="container">
+<header>
+  <h1>FORM EVIDENT AKTIVITAS KELAS 1</h1>
+  <h2>PELAKSANAAN PEKERJAAN PENGELOLAAN GEDUNG TELKOM 2025</h2>
+
+  <div class="subtitle">
+    <label>ID GEDUNG :</label>
+    <input type="text" id="idGedung" placeholder="ID GEDUNG" />
+
+    <label>NAMA GEDUNG :</label>
+    <input type="text" id="namaGedung" placeholder="NAMA GEDUNG" />
+
+    <label>PERIODE :</label>
+    <input type="text" id="periode" placeholder="Misal: Januari 2025" />
+  </div>
+</header>
+
+
+    <div class="actions">
+      <button class="btn" id="btnPrint">🖨️ Cetak</button>
+      <button class="btn secondary" id="btnClear">🗑️ Bersihkan Semua</button>
+    </div>
+
+    <div class="progress"><div class="progress-inner" id="progressBar">0%</div></div>
+    <div class="note">Pastikan format gambar 4:3 portrait. Hubungi admin jika butuh bantuan.</div>
+
+    <main id="root"></main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Evident Foto Telkom 2025</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header>📸 DASHBOARD EVIDENT AKTIVITAS FOTO GEDUNG TELKOM 2025</header>
+  <div class="selector">
+    <label for="kelas">Pilih Kelas Aktivitas:</label>
+    <select id="kelas">
+      <option value="">-- Pilih Kelas --</option>
+      <option value="1">Kelas 1</option>
+      <option value="2">Kelas 2</option>
+      <option value="3">Kelas 3</option>
+      <option value="4">Kelas 4</option>
+      <option value="5">Kelas 5</option>
+      <option value="6">Kelas 6</option>
+    </select>
+    <button onclick="goToForm()">Buka Form</button>
+  </div>
+
+  <script>
+    function goToForm() {
+      const kelas = document.getElementById('kelas').value;
+      if (!kelas) return alert('Silakan pilih kelas terlebih dahulu.');
+      window.location.href = `form.html?kelas=${kelas}`;
+    }
+  </script>
+</body>
+</html>
