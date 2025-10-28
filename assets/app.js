@@ -1,6 +1,4 @@
 // === APP EVIDENT FOTO GEDUNG TELKOM 2025 ===
-// By Expecto Patronum (2025)
-// ---------------------------------------------
 
 const urlParams = new URLSearchParams(window.location.search);
 const kelas = urlParams.get("kelas");
@@ -9,11 +7,11 @@ const jobData = (window.KELAS_DATA && window.KELAS_DATA[kelas]) || [];
 const root = document.getElementById("root");
 const progressBar = document.getElementById("progressBar");
 
-// Ganti judul form sesuai kelas (aman tanpa error)
+// Ganti judul form sesuai kelas
 const titleEl = document.querySelector("header h1");
 if (titleEl) titleEl.textContent = `FORM EVIDENT AKTIVITAS KELAS ${kelas || "?"}`;
 
-// Isi otomatis periode saat load halaman
+// Isi otomatis periode
 const periodeInput = document.getElementById("periode");
 if (periodeInput) {
   periodeInput.value = new Date().toLocaleString("id-ID", {
@@ -22,22 +20,19 @@ if (periodeInput) {
   });
 }
 
-// Jika kelas tidak ditemukan → tampilkan pesan
+// Jika kelas tidak ditemukan
 if (!jobData.length) {
   root.innerHTML = `
-    <div style="text-align:center; margin-top:40px; color:#9ca3af;">
+    <div style="text-align:center; margin-top:40px; color:#999;">
       <h2>⚠️ Data aktivitas untuk kelas ${kelas || "(tidak diketahui)"} tidak ditemukan.</h2>
-      <p>Silakan kembali ke <a href="index.html" style="color:#3b82f6;">Dashboard</a>.</p>
+      <p>Silakan kembali ke <a href="index.html">Dashboard</a>.</p>
     </div>`;
   throw new Error("Data kelas tidak ditemukan");
 }
 
 // Konstanta gambar
-const TARGET_W = 900,
-  TARGET_H = 1200,
-  JPEG_QUALITY = 0.8;
-
-let hashes = []; // penyimpanan hash gambar untuk deteksi duplikat
+const TARGET_W = 900, TARGET_H = 1200, JPEG_QUALITY = 0.8;
+let hashes = [];
 
 // Utility: buat elemen cepat
 function el(tag, attrs = {}, children = []) {
@@ -51,13 +46,10 @@ function el(tag, attrs = {}, children = []) {
   return node;
 }
 
-// Render form aktivitas
+// Render form
 function render() {
   root.innerHTML = "";
-
-  const section = el("section", { class: "section" }, [
-    el("h2", {}, [`KELAS ${kelas}`]),
-  ]);
+  const section = el("section", { class: "section" }, [el("h2", {}, [`KELAS ${kelas}`])]);
   const grid = el("div", { class: "cards" });
 
   jobData.forEach((job, idx) => {
@@ -72,7 +64,6 @@ function render() {
     });
     const preview = el("div", { class: "preview", id: `preview-${inputId}` });
 
-    // upload event
     fileInput.addEventListener("change", async (e) => {
       if (!e.target.files?.length) return;
       for (const file of e.target.files) await addImage(preview, file);
@@ -90,7 +81,6 @@ function render() {
       ]),
       preview,
     ]);
-
     grid.append(card);
   });
 
@@ -111,21 +101,14 @@ async function addImage(previewEl, file) {
   const ctx = canvas.getContext("2d");
 
   const ratio = TARGET_W / TARGET_H;
-  const srcW = img.width,
-    srcH = img.height;
+  const srcW = img.width, srcH = img.height;
   const srcRatio = srcW / srcH;
   let sx, sy, sw, sh;
 
   if (srcRatio > ratio) {
-    sh = srcH;
-    sw = sh * ratio;
-    sx = (srcW - sw) / 2;
-    sy = 0;
+    sh = srcH; sw = sh * ratio; sx = (srcW - sw) / 2; sy = 0;
   } else {
-    sw = srcW;
-    sh = sw / ratio;
-    sx = 0;
-    sy = (srcH - sh) / 2;
+    sw = srcW; sh = sw / ratio; sx = 0; sy = (srcH - sh) / 2;
   }
 
   ctx.drawImage(img, sx, sy, sw, sh, 0, 0, TARGET_W, TARGET_H);
@@ -165,7 +148,6 @@ function loadImage(file) {
   });
 }
 
-// Hash gambar sederhana (untuk deteksi duplikat)
 function getImageHash(canvas) {
   const ctx = canvas.getContext("2d");
   const data = ctx.getImageData(0, 0, 32, 32).data;
@@ -205,9 +187,8 @@ function updateProgress() {
   progressBar.textContent = pct + "%";
 }
 
-// Tombol fungsi
+// Tombol
 document.getElementById("btnPrint").onclick = () => window.print();
-
 document.getElementById("btnClear").onclick = () => {
   if (confirm("Hapus seluruh foto di form ini?")) {
     document.querySelectorAll("#root .preview").forEach((p) => (p.innerHTML = ""));
@@ -215,14 +196,34 @@ document.getElementById("btnClear").onclick = () => {
     updateProgress();
   }
 };
+document.getElementById("btnDashboard").onclick = () => (window.location.href = "index.html");
 
 // Render awal
 render();
 
-// === Tambahan: Tombol kembali ke dashboard ===
-const backBtn = document.getElementById("btnDashboard");
-if (backBtn) {
-  backBtn.addEventListener("click", () => {
-    window.location.href = "index.html";
+// === 🆕 Dropdown Sinkronisasi Gedung ===
+const idSelect = document.getElementById("idGedung");
+const namaSelect = document.getElementById("namaGedung");
+
+if (window.GEDUNG_DATA && idSelect && namaSelect) {
+  Object.entries(GEDUNG_DATA).forEach(([id, nama]) => {
+    const opt1 = document.createElement("option");
+    opt1.value = id;
+    opt1.textContent = id;
+    idSelect.appendChild(opt1);
+
+    const opt2 = document.createElement("option");
+    opt2.value = nama;
+    opt2.textContent = nama;
+    namaSelect.appendChild(opt2);
+  });
+
+  idSelect.addEventListener("change", () => {
+    namaSelect.value = GEDUNG_DATA[idSelect.value] || "";
+  });
+
+  namaSelect.addEventListener("change", () => {
+    const found = Object.entries(GEDUNG_DATA).find(([id, n]) => n === namaSelect.value);
+    idSelect.value = found ? found[0] : "";
   });
 }
