@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Form Evident Aktivitas</title>
+
   <link rel="stylesheet" href="assets/style.css">
   <script src="data/kelas_data.js"></script>
+  <script src="data/gedung_data.js"></script> <!-- 🆕 Tambahan -->
   <script src="assets/app.js" defer></script>
 </head>
 <body>
@@ -16,10 +18,14 @@
 
       <div class="subtitle">
         <label>ID GEDUNG :</label>
-        <input type="text" id="idGedung" placeholder="ID GEDUNG" />
+        <select id="idGedung">
+          <option value="">-- Pilih ID --</option>
+        </select>
 
         <label>NAMA GEDUNG :</label>
-        <input type="text" id="namaGedung" placeholder="NAMA GEDUNG" />
+        <select id="namaGedung">
+          <option value="">-- Pilih Gedung --</option>
+        </select>
 
         <label>PERIODE :</label>
         <input type="text" id="periode" placeholder="Misal: Januari 2025" />
